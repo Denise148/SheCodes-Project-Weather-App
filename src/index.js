@@ -1,11 +1,11 @@
 import axios from "axios";
 
 function displayTemperature(response) {
+  let temperatureElement = document.querySelector("#current-temperature");
   let temperature = Math.round(response.data.temperature.current);
-  let currentTemperature = document.querySelector("#current-temperature-value");
-  currentTemperature.innerHTML = temperature;
   let cityElement = document.querySelector("#current-city");
   cityElement.innerHTML = response.data.city;
+  temperatureElement.innerHTML = temperature;
 }
 
 function search(event) {
@@ -13,12 +13,10 @@ function search(event) {
   let searchInputElement = document.querySelector("#search-input");
   let city = searchInputElement.value;
 
-  let apiKey = "20b266eb57t5a497fa9e0073d3a3017o";
-  axios
-    .get(
-      `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`
-    )
-    .then(displayTemperature);
+  let apiKey = "b2a5adcct04b33178913oc335f405433";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(displayTemperature);
 }
 
 function formatDate(date) {
@@ -53,3 +51,5 @@ searchForm.addEventListener("submit", search);
 
 let currentDateELement = document.querySelector("#current-date");
 let currentDate = new Date();
+
+currentDateELement.innerHTML = formatDate(currentDate);
